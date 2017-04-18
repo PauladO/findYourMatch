@@ -1,10 +1,9 @@
 <h1>Users</h1>
-<table style="width:100%">
+<table style="width:80%">
   <tr>
     <th>First name</th>
     <th>Last name</th>
     <th>email address</th>
-    <th>Student</th>
     <th>Admin</th>
   </tr>
   <% @users.each do |user| %>
@@ -12,8 +11,7 @@
       <td><%= user.first_name %></td>
       <td><%= user.last_name %></td>
       <td><%= user.email %></td>
-      <td><%= user.student ? "student" : "-" %></td>
-      <td><%= user.admin ? "Admin" : "-" %></td>
+      <td><%= user.admin ? "Admin" : "Student" %></td>
     </tr>
   <% end %>
 </table>
