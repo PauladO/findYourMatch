@@ -16,7 +16,7 @@
     <tr>
       <td>Match id: <%= match.id %></td>
       <td>Date: <%= match.date %></td>
-      <td><p>Students: <%= match.users.first.name %> & <%= match.users.last.name %></p>
+      <td><p>Students: <%= match.users.first == @user? match.users.last.name : match.users.first.name %></p>
       </td>
     </tr>
   <% end %>
