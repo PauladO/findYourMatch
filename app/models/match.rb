@@ -3,9 +3,7 @@ class Match < ApplicationRecord
 
   def self.matchable_students(matchables, current_student)
     least_matched = self.minimum_matched(matchables, current_student)
-    matchables = matchables.select {|matchable_student| matchable_student != current_student && self.times_matched(current_student, matchable_student) <= least_matched }
-    puts "matchable students:"
-    matchables.each {|student| puts student.name }
+    matchables.select {|matchable_student| matchable_student != current_student && self.times_matched(current_student, matchable_student) <= least_matched }
   end
 
   def self.minimum_matched(students, current_student)
