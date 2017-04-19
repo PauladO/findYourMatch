@@ -1,12 +1,6 @@
 class Match < ApplicationRecord
   has_and_belongs_to_many :users
-
-  def available_matches(current_student, student_id)
-    # previous_matches = current_student.matches.select{|hash| hash[:id]}
-    # students.select{|hash| hash[:id] !== }
-  end
-
-
+  
   def self.matchable_students(matchables, current_student)
     least_matched = self.minimum_matched(matchables, current_student)
     matchables = matchables.select {|matchable_student| matchable_student != current_student && self.times_matched(current_student, matchable_student) == least_matched }
