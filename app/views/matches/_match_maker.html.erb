@@ -1,1 +1,5 @@
-<%= button_to "Match", matches_path %>
+<%= form_tag("/matches/generate", method: "post") do %>
+  <label>Date:</label>
+  <%= date_field_tag(:date, Date.today) %>
+  <%= submit_tag("Generate matches") %>
+<% end %>
