@@ -1,11 +1,18 @@
 <h1>All matches</h1>
+<%= render 'match_maker' %>
 
-<% @matches.each do |match| %>
-  <h4>Match id: <%= match.id %></h4>
-  <h5>Date: <%= match.date %></h5>
-  <h5>Students:</h5>
-  <% match.users.each do |student| %>
-    <p><%= student.first_name %> <%= student.last_name %></p>
+<table style="width: 80%">
+  <tr>
+    <th>Match ID</th>
+    <th>Date</th>
+    <th>Students</th>
+  </tr>
+  <% @matches.each do |match| %>
+    <tr>
+      <td><%= match.id %></td>
+      <td>Date: <%= match.date %></td>
+      <td>Students:</td>
+      <td><%= match.users.first.name %> & <%= match.users.last.name %> </td>
+    </tr>
   <% end %>
-
-<% end %>
+</table>
