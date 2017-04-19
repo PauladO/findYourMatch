@@ -1,0 +1,23 @@
+<h1>Hello <%= @user.name %></h1>
+<h1>Your match</h1>
+
+<h3>Todays match</h3>
+<h4>Match id: <%= @user.todays_match.id %></h4>
+<h5>Date: <%= @user.todays_match.date %></h5>
+<h5>Students:</h5>
+<% @user.todays_match.users.each do |student| %>
+  <p><%= student.first_name %> <%= student.last_name %></p>
+<% end %>
+<hr>
+
+<h3>Past matches</h3>
+<table style="width: 50%">
+  <% @user.past_matches.each do |match| %>
+    <tr>
+      <td>Match id: <%= match.id %></td>
+      <td>Date: <%= match.date %></td>
+      <td><p>Students: <%= match.users.first.name %> & <%= match.users.last.name %></p>
+      </td>
+    </tr>
+  <% end %>
+</table>
