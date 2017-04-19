@@ -11,4 +11,9 @@ class MatchesController < ApplicationController
     Match.generate
     redirect_to matches_path
   end
+
+  def generate
+    Match.generate(params[:date])
+    redirect_to matches_path
+  end
 end
