@@ -10,7 +10,10 @@ Dave = User.create(first_name: "Dave", last_name: "Evad", admin: false, email: "
 
 puts "Created users"
 
-match1 = Match.create(date: Date.new, users: [StudentSteve, Jack])
-match2 = Match.create(date: Date.new, users: [Dave, Amanda])
+match1 = Match.create(date: Date.yesterday, users: [StudentSteve, Amanda])
+match1 = Match.create(date: Date.today, users: [StudentSteve, Jack])
+match2 = Match.create(date: Date.today, users: [Dave, Amanda])
+match3 = Match.create(date: Date.tomorrow, users: [StudentSteve, Jane])
+match4 = Match.create(date: Date.yesterday, users: [Jane, Amanda])
 
 puts "Created matches"

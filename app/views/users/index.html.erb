@@ -1,17 +1,17 @@
 <h1>Users</h1>
 <table style="width:80%">
   <tr>
-    <th>First name</th>
-    <th>Last name</th>
+    <th>Name</th>
     <th>email address</th>
     <th>Admin</th>
+    <th>User ID</th>
   </tr>
   <% @users.each do |user| %>
     <tr>
-      <td><%= user.first_name %></td>
-      <td><%= user.last_name %></td>
+      <td><%= user.name %></td>
       <td><%= user.email %></td>
       <td><%= user.admin ? "Admin" : "Student" %></td>
+      <td><%= user.id %></td>
     </tr>
   <% end %>
 </table>
