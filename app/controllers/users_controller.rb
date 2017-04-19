@@ -7,6 +7,5 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @matches = @user.matches
   end
 end
