@@ -49,8 +49,8 @@ class Match < ApplicationRecord
 
   def self.assign_left_over(students, match_date)
     if students.length == 1
-      self.assign_to_loner(students, match_date)
-      return []
+      assigned = self.assign_to_loner(students, match_date)
+      return [] if assigned
     end
     Match.create(date: match_date, user_ids: students)
     return []
@@ -58,8 +58,11 @@ class Match < ApplicationRecord
 
   def self.assign_to_loner(students, match_date)
     unmatched = Match.select{|match| match.users.length == 1 && match.date.strftime("%F") == match_date }.first
+    debugger
+    return false if(!unmatched)
     students << unmatched.users.first.id
-    unmatched.update(user_ids: students.compact)
+    unmatched.update(user_ids: students)
+    return true
   end
 
 end
