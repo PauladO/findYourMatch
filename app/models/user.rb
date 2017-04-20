@@ -17,4 +17,14 @@ class User < ApplicationRecord
   def past_matches
     matches.select{|hash| hash[:date] < Date.today}
   end
+
+  def self.toggle_admin(id)
+    puts "in the toggle_admin method!"
+    selected_user = User.find(id)
+    puts selected_user.admin
+    admin_status = !selected_user.admin
+    selected_user.update(admin: admin_status)
+    puts selected_user.admin
+
+  end
 end

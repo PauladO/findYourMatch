@@ -12,6 +12,7 @@
       <td><%= user.email %></td>
       <td><%= user.admin ? "Admin" : "Student" %></td>
       <td><%= user.id %></td>
+      <td><%= button_to user.admin ? "Demote to student" : "Make admin", user_path(user.id), method: "put" %></td>
     </tr>
   <% end %>
 </table>
