@@ -40,7 +40,7 @@ class Match < ApplicationRecord
     self.match_student(students, students.first, date)
   end
 
-  def self.generate(date)
+  def self.generate(date = Date.today)
     students = User.select{|hash| hash[:admin] == false }
     self.match_student(students, students.first, date)
   end
