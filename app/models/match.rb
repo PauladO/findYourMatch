@@ -24,10 +24,6 @@ class Match < ApplicationRecord
   end
 
   def self.match_student(students, current_student, date)
-    puts "students left:"
-    students.each do |student|
-      puts student.name
-    end
     return if students.length < 1
     if current_student.matches.select{|match| match[:date].strftime("%F") == date }.length > 0
       students = students.select{|student| student != current_student }
@@ -38,7 +34,6 @@ class Match < ApplicationRecord
       end
       matchables = matchable_students(students, current_student)
       match = self.make_match(matchables)
-      puts "Student #{current_student.name} matched with #{match.name}"
       Match.create(date: date, users: [match, current_student])
       students = students.select{|student| student != match && student != current_student}
     end
@@ -48,6 +43,5 @@ class Match < ApplicationRecord
   def self.generate(date)
     students = User.select{|hash| hash[:admin] == false }
     self.match_student(students, students.first, date)
-    puts "yay made the matches"
   end
 end
