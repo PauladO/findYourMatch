@@ -9,7 +9,6 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
 
-
   def name
     "#{first_name} #{last_name}"
   end
@@ -27,4 +26,5 @@ class User < ApplicationRecord
     admin_status = !selected_user.admin
     selected_user.update(admin: admin_status)
   end
+
 end
