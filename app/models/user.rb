@@ -5,6 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_and_belongs_to_many :matches
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  
+
 
   def name
     "#{first_name} #{last_name}"
@@ -19,12 +23,8 @@ class User < ApplicationRecord
   end
 
   def self.toggle_admin(id)
-    puts "in the toggle_admin method!"
     selected_user = User.find(id)
-    puts selected_user.admin
     admin_status = !selected_user.admin
     selected_user.update(admin: admin_status)
-    puts selected_user.admin
-
   end
 end
