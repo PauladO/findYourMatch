@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
+  include IsAdmin
+  before_action :is_admin?, only: :index
   before_action :authenticate_user!
   before_action :set_user, only: [:show, :update]
+
   def index
+    if !is_admin?
+      redirect_to user_path(current_user.id)
+    end
     @users = User.all
   end
 
