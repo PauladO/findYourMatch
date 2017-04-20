@@ -12,7 +12,7 @@
       <td><%= match.id %></td>
       <td>Date: <%= match.date %></td>
       <td>Students:</td>
-      <td><%= match.users.first.name %><%= match.users.length == 1 ? "" : " & #{match.users.last.name}" %> </td>
+      <td><%= match.users[0].name %><%= match.users.length == 1 ? "" : " & #{match.users[1].name}" %> </td>
     </tr>
   <% end %>
 </table>

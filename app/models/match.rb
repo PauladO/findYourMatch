@@ -1,47 +1,63 @@
 class Match < ApplicationRecord
   has_and_belongs_to_many :users
 
-  def self.matchable_students(matchables, current_student)
-    least_matched = self.minimum_matched(matchables, current_student)
-    matchables.select {|matchable_student| matchable_student != current_student && self.times_matched(current_student, matchable_student) <= least_matched }
-  end
-
-  def self.minimum_matched(students, current_student)
-    minimum_matched = 100000
-    students.each do |student|
-      matches = self.times_matched(current_student, student)
-      minimum_matched = matches if matches < minimum_matched
-    end
-    minimum_matched
-  end
-
-  def self.times_matched(current_student, matchable_student)
-    Match.select{|match| match.users.include?(matchable_student) && match.users.include?(current_student)}.length
-  end
-
-  def self.make_match(matchable_students)
-    matchable_students.sample
-  end
-
-  def self.match_student(students, current_student, date)
-    return if students.length < 1
-    if current_student.matches.select{|match| match[:date].strftime("%F") == date }.length > 0
-      students = students.select{|student| student != current_student }
-    else
-      if students.length == 1
-        Match.create(date: date, users: [students.first])
-        return
-      end
-      matchables = matchable_students(students, current_student)
-      match = self.make_match(matchables)
-      Match.create(date: date, users: [match, current_student])
-      students = students.select{|student| student != match && student != current_student}
-    end
-    self.match_student(students, students.first, date)
-  end
-
   def self.generate(date = Date.today)
-    students = User.select{|hash| hash[:admin] == false }
-    self.match_student(students, students.first, date)
+    students_without_match = User.select{|user| user[:admin] == false && user.matches.select{|match| match.date.strftime("%F") == date }.length < 1}
+    puts "students to be matched:"
+    puts "_" * 100
+    students_without_match.each {|student|  puts student.name }
+    student_ids = students_without_match.map{|student| student.id}.shuffle
+    self.match_student(student_ids, date)
   end
+
+  def self.match_student(students, date)
+    students = self.assign_left_over(students, date) if students.length <= 2 && students.length > 0
+    return if students.length == 0
+    current_student = students.first
+    match = self.make_match(students, current_student, date)
+    students = students.select{|student| student != match && student != current_student}
+    self.match_student(students, date)
+  end
+
+  def self.make_match(students, current_student, date)
+    other_students = self.other_students(students, current_student)
+    match = self.find_match(other_students, current_student)
+    Match.create(date: date, user_ids: [match, current_student])
+    match
+  end
+
+  def self.find_match(other_students, current_student)
+    minimum_matched = 100000
+    other_students.each do |other_student|
+      matches = self.times_matched(other_student, current_student)
+      if matches < minimum_matched
+        minimum_matched = matches
+        matched_student = other_student
+      end
+      return matched_student if minimum_matched == 0
+    end
+    debugger
+    matched_student
+  end
+
+  def self.times_matched(other_student, current_student)
+    matches = Match.select{|match| match.user_ids.include?(other_student) && match.user_ids.include?(current_student)}.length
+    debugger
+    matches
+  end
+
+  def self.other_students(students, current_student)
+    other_students = students.select{|student| student != current_student }
+    puts "the current student: #{current_student}"
+    puts "the other students: #{other_students}"
+    other_students
+  end
+
+  def self.assign_left_over(students, date)
+    Match.create(date: date, user_ids: students)
+    students = []
+    return students
+  end
+
+
 end
