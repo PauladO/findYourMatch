@@ -15,14 +15,3 @@ Grey = User.create(first_name: "Grey", last_name: "Lady", admin: false, email: "
 Jannett = User.create(first_name: "Jannett", last_name: "Jackson", admin: false, email: "Jannett@express.biz", password: "abc123")
 
 puts "Created users"
-
-# match1 = Match.create(date: Date.yesterday, users: [StudentSteve, Amanda])
-# match1 = Match.create(date: Date.today, users: [StudentSteve, Jack])
-# match2 = Match.create(date: Date.today, users: [Dave, Amanda])
-# match3 = Match.create(date: Date.tomorrow, users: [StudentSteve, Jane])
-# match3 = Match.create(date: Date.yesterday, users: [StudentSteve, Jane])
-# match3 = Match.create(date: Date.today, users: [StudentSteve, Jane])
-# match3 = Match.create(date: Date.tomorrow, users: [StudentSteve, Jane])
-# match4 = Match.create(date: Date.yesterday, users: [Jane, Amanda])
-#
-# puts "Created matches"
