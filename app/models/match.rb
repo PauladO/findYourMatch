@@ -2,14 +2,12 @@ class Match < ApplicationRecord
   has_and_belongs_to_many :users
 
   def self.generate(date = Date.today.strftime("%F"))
-    puts "about to generate, date: #{date}"
     students_without_match = User.select{|user| user[:admin] == false && user.matches.select{|match| match.date.strftime("%F") == date }.length < 1}
     student_ids = students_without_match.map{|student| student.id}.shuffle
     self.match_student(student_ids, date)
   end
 
   def self.match_student(students, date)
-  puts "matching student"
     students = self.assign_left_over(students, date) if students.length <= 2 && students.length > 0
     return if students.length == 0
     current_student = students.first
