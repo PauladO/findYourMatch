@@ -14,7 +14,13 @@ class User < ApplicationRecord
   end
 
   def todays_match
-    matches.find{|hash| hash[:date] === Date.today}
+    match = matches.find{|hash| hash[:date] === Date.today}
+    return if match == nil
+    if match.users.length == 2
+      match.users.first == @user ? match.users.last.name : match.users.first.name
+    else
+      "No partner for today"
+    end
   end
 
   def past_matches

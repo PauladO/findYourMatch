@@ -1,15 +1,50 @@
 <h1>All matches</h1>
 <%= render 'match_maker' %>
 
+<h3>Todays matches</h3>
 <table style="width: 80%">
   <tr>
     <th>Match ID</th>
     <th>Date</th>
     <th>Students</th>
   </tr>
-  <% @matches.each do |match| %>
+  <% @todays_matches.each do |match| %>
     <tr>
-      <td><%= match.id %></td>
+      <td><%= link_to match.id, match_path(match.id) %></td>
+      <td>Date: <%= match.date %></td>
+      <td>Students:</td>
+      <td><%= match.users[0].name %><%= match.users.length == 1 ? "" : " & #{match.users[1].name}" %> </td>
+    </tr>
+  <% end %>
+</table>
+
+<h3>Past matches</h3>
+<table style="width: 80%">
+  <tr>
+    <th>Match ID</th>
+    <th>Date</th>
+    <th>Students</th>
+  </tr>
+  <% @past_matches.each do |match| %>
+    <tr>
+      <td><%= link_to match.id, match_path(match.id) %></td>
+      <td>Date: <%= match.date %></td>
+      <td>Students:</td>
+      <td><%= match.users[0].name %><%= match.users.length == 1 ? "" : " & #{match.users[1].name}" %> </td>
+    </tr>
+  <% end %>
+</table>
+
+<h3>Upcomming matches</h3>
+<table style="width: 80%">
+  <tr>
+    <th>Match ID</th>
+    <th>Date</th>
+    <th>Students</th>
+  </tr>
+  <% @future_matches.each do |match| %>
+    <tr>
+      <td><%= link_to match.id, match_path(match.id) %></td>
       <td>Date: <%= match.date %></td>
       <td>Students:</td>
       <td><%= match.users[0].name %><%= match.users.length == 1 ? "" : " & #{match.users[1].name}" %> </td>
