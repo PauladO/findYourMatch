@@ -24,11 +24,5 @@ describe "Admin on the matches page" do
 
       expect(page).to have_text("#{user1.name} & #{user2.name}")
     end
-
-    it "does not contain the admin name" do
-      visit matches_path
-
-      expect(page).not_to have_text(admin.name)
-    end
   end
 end
