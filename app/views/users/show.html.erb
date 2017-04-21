@@ -1,12 +1,7 @@
-<h1>Hello <%= @user.name %></h1>
+<h1><%= @user.name %></h1>
+<h3><%= @user.admin ? "Admin" : "Student" %></h3>
 <hr>
-<h2>Todays match:
-  <% if @user.todays_match %>
-    <%= @user.todays_match.users.first == @user? @user.todays_match.users.last.name : @user.todays_match.users.first.name %>
-  <% else %>
-    No match yet
-  <% end %>
-</h2>
+<h2>Todays match: <%= @user.todays_match %></h2>
 <hr>
 
 <h3>Past matches</h3>

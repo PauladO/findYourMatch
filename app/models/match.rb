@@ -2,12 +2,14 @@ class Match < ApplicationRecord
   has_and_belongs_to_many :users
 
   def self.generate(date = Date.today.strftime("%F"))
+    puts "about to generate, date: #{date}"
     students_without_match = User.select{|user| user[:admin] == false && user.matches.select{|match| match.date.strftime("%F") == date }.length < 1}
     student_ids = students_without_match.map{|student| student.id}.shuffle
     self.match_student(student_ids, date)
   end
 
   def self.match_student(students, date)
+  puts "matching student"
     students = self.assign_left_over(students, date) if students.length <= 2 && students.length > 0
     return if students.length == 0
     current_student = students.first
@@ -38,7 +40,6 @@ class Match < ApplicationRecord
 
   def self.times_matched(other_student, current_student)
     matches =  User.find(current_student).matches.select{|match| match.user_ids.include?(other_student) && match.user_ids.include?(current_student)}.length ## faster than checking through matches
-    debugger
     matches
   end
 
@@ -58,7 +59,6 @@ class Match < ApplicationRecord
 
   def self.assign_to_loner(students, match_date)
     unmatched = Match.select{|match| match.users.length == 1 && match.date.strftime("%F") == match_date }.first
-    debugger
     return false if(!unmatched)
     students << unmatched.users.first.id
     unmatched.update(user_ids: students)

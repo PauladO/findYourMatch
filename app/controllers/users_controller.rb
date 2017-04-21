@@ -12,9 +12,11 @@ class UsersController < ApplicationController
   end
 
   def show
+    if !@user.todays_match
+      Match.generate
+      redirect_to user_path(current_user.id)
+    end
     redirect_to user_path(current_user.id) if current_user != @user unless current_user.admin
-
-    Match.generate unless !!@user.todays_match
   end
 
   def update
